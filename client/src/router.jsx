@@ -5,6 +5,7 @@ import Layout from "./components/Layout";
 
 import Home from "./pages/home";
 import Host from "./pages/host";
+import Join from "./pages/join";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +16,8 @@ const router = createBrowserRouter([
       element: <Home />,
     },
     {
-      path: "/about",
-      element: <div>About</div>,
+      path: "/join",
+      element: <Join />,
     },
     {
       path: "/host",
