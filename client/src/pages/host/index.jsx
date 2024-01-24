@@ -1,8 +1,10 @@
 import React from "react";
 import { Button,Select } from "@radix-ui/themes";
+import { Link } from "react-router-dom";
 function Host() {
   return (
-    <div className="flex h-full gap-32 items-center justify-center">
+    <div className="h-full flex flex-col items-center justify-center">
+    <div className="flex h-fit gap-32 items-center justify-center">
       <div className="flex flex-col items-center justify-center">
         <p className="text-2xl font-bold text-stone-700 mb-4">
           Host one of your session
@@ -52,6 +54,12 @@ function Host() {
         </Button>
         </form>
       </div>
+    </div>
+    <Link to="/session-create">
+    <Button className="mt-24 cursor-pointer " color="gray" variant="soft" size={"4"}>
+      New Session
+    </Button>
+    </Link>
     </div>
   );
 }

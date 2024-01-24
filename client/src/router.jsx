@@ -7,6 +7,8 @@ import Home from "./pages/home";
 import Host from "./pages/host";
 import Join from "./pages/join";
 
+import SessionCreate from "./pages/session-create";
+
 const router = createBrowserRouter([
   {
   element: <Layout />,
@@ -22,6 +24,10 @@ const router = createBrowserRouter([
     {
       path: "/host",
       element: <Host />,
+    },
+    {
+      path: "/session-create",
+      element: <SessionCreate />,
     },
     {
       path: "*",
