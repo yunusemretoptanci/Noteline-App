@@ -1,10 +1,16 @@
 import { Button } from "@radix-ui/themes";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-
+import useLesson from "../../hooks/useLesson";
+import ErrorModal from "../../components/ErrorModal";
 function CreatedSessionPreview() {
   const { state } = useLocation();
-  console.log(state);
+  const { startLesson, error } = useLesson();
+
+  const onStartLesson = () => {
+    startLesson(state.code, state.pin);
+  };
+  
   return (
     <>
       <div className="flex flex-col items-center justify-center h-full ">
@@ -23,8 +29,7 @@ function CreatedSessionPreview() {
           </h2>
 
           <div className="flex  justify-between mt-8">
-            <p className="text-2xl font-normal">
-              Join With Code:</p>
+            <p className="text-2xl font-normal">Join With Code:</p>
             <p className="text-2xl font-light text-green-600"> {state.code}</p>
           </div>
           <div className="flex justify-between mt-8">
@@ -34,24 +39,25 @@ function CreatedSessionPreview() {
         </div>
 
         <div className="flex gap-32">
-        <Button
-                    className="mt-3 cursor-pointer "
-                    color="orange"
-                    variant="soft"
-                    size={"4"}
-                  >
-                    Host Now
-         </Button>
-
-        <Link to="/">
-         <Button
-                    className="mt-3 cursor-pointer "
-                    color="green"
-                    variant="soft"
-                    size={"4"}
-                  >
-                    Save for later
+          <Button
+            className="mt-3 cursor-pointer "
+            color="orange"
+            variant="soft"
+            size={"4"}
+            onClick={onStartLesson}
+          >
+            Host Now
           </Button>
+
+          <Link to="/">
+            <Button
+              className="mt-3 cursor-pointer "
+              color="green"
+              variant="soft"
+              size={"4"}
+            >
+              Save for later
+            </Button>
           </Link>
         </div>
       </div>

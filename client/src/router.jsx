@@ -9,6 +9,8 @@ import Join from "./pages/join";
 
 import SessionCreate from "./pages/session-create";
 import CreatedSessionPreview from "./pages/created-session-preview";
+
+import Lesson from "./pages/lesson";
 const router = createBrowserRouter([
   {
   element: <Layout />,
@@ -34,9 +36,14 @@ const router = createBrowserRouter([
       element: <CreatedSessionPreview />,
     },
     {
+      path: "/lesson",
+      element: <Lesson />,
+    },
+    {
       path: "*",
       element: <div>Not Found</div>,
     },
+
   ],
   }
   ]);
