@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       element: <CreatedSessionPreview />,
     },
     {
-      path: "/lesson",
+      path: "/lesson/:lessonCode",
       element: <Lesson />,
     },
     {
