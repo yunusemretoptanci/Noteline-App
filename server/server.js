@@ -1,13 +1,24 @@
 const express = require('express');
 const http = require('http');
-const socketIO = require('socket.io');
 const sqlite3 = require('sqlite3').verbose();
 const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+
+const io = require("socket.io")(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"]
+  }
+});
+
 app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 const db = new sqlite3.Database('database.db');
 // create lessons table
@@ -21,6 +32,7 @@ CREATE TABLE IF NOT EXISTS lessons (
     pin TEXT,
     started BOOLEAN,
     startedAt DATETIME,
+    updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
     onlineParticipants INTEGER DEFAULT 0,
     disconnectedParticipants INTEGER DEFAULT 0,
     isFinished BOOLEAN DEFAULT false,
@@ -127,9 +139,30 @@ app.post('/create-lesson', (req, res) => {
   
         io.emit('lesson-started', { lessonId: row.id });
   
-        res.json({ success: true });
+        res.json({ success: true, lessonId: row.id,lessonCode: row.code});
       });
   });
+
+  app.get('/get-lesson/:lessonCode', (req, res) => {
+    const { lessonCode } = req.params;
+  
+    // filter lessons by code
+    db.get('SELECT * FROM lessons WHERE code = ?', [lessonCode], (err, row) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+        return;
+      }
+  
+      if (!row) {
+        res.status(404).json({ error: 'Lesson not found' });
+        return;
+      }
+  
+      res.json(row);
+    });
+  }
+  );
 
   //finish lesson
 
@@ -234,12 +267,39 @@ app.get('/get-clicks/:lessonCode', (req, res) => {
           res.status(404).json({ error: 'Invalid code or lesson not started or already finished' });
           return;
         }
-  
-      
-  
-        res.json({ success: true });
+        db.run('UPDATE lessons SET onlineParticipants = onlineParticipants + 1 WHERE id = ?',
+          [row.id]);
+
+        io.emit('lesson-joined', { lessonId: row.id});
+        res.json({ success: true, lessonId: row.id, lessonCode: row.code});
       });
   });
+
+  //disconnect lesson
+  app.post('/disconnect-lesson/:lessonCode', (req, res) => {
+    const { lessonCode } = req.params;
+  
+    // check code
+    db.get('SELECT * FROM lessons WHERE code = ? AND started = true AND isFinished = false',
+      [lessonCode], (err, row) => {
+        if (err) {
+          console.error(err);
+          res.status(500).json({ error: 'Internal Server Error' });
+          return;
+        }
+  
+        if (!row) {
+          res.status(404).json({ error: 'Invalid code or lesson not started or already finished' });
+          return;
+        }
+        db.run('UPDATE lessons SET onlineParticipants = onlineParticipants - 1, disconnectedParticipants = disconnectedParticipants + 1 WHERE id = ?',
+          [row.id]);
+          
+        io.emit('lesson-disconnected', { lessonId: row.id});
+        res.json({ success: true, lessonId: row.id, lessonCode: row.code});
+      });
+  }
+  );
 
 
 
