@@ -8,7 +8,7 @@ import Host from "./pages/host";
 import Join from "./pages/join";
 
 import SessionCreate from "./pages/session-create";
-
+import CreatedSessionPreview from "./pages/created-session-preview";
 const router = createBrowserRouter([
   {
   element: <Layout />,
@@ -28,6 +28,10 @@ const router = createBrowserRouter([
     {
       path: "/session-create",
       element: <SessionCreate />,
+    },
+    {
+      path: "/created-session-preview",
+      element: <CreatedSessionPreview />,
     },
     {
       path: "*",

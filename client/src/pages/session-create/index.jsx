@@ -3,17 +3,15 @@ import {
   TextArea,
   Button,
   Select,
-  RadioGroup,
-  Flex,
-  Text,
 } from "@radix-ui/themes";
 import ReactionButtons from "../../components/ReactionButtons";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useButtonList from "../../hooks/useButtonList";
-import { Link } from "react-router-dom";
+import useCreateLesson from "../../hooks/useCreateLesson";
 
 function SessionCreate() {
+ 
   const [isPreview, setIsPreview] = useState(false);
   const [buttonList, addNewButtonList] = useButtonList();
   const [addNewButtonListDialogOpen, setAddNewButtonListDialogOpen] =
@@ -25,6 +23,8 @@ function SessionCreate() {
     commentButton: true,
     questionButton: true,
   });
+  const [sessionName, setSessionName] = useState("");
+  const [sessionDescription, setSessionDescription] = useState("");
 
   const [
     newButtonListSelectedCheckboxValues,
@@ -32,7 +32,7 @@ function SessionCreate() {
   ] = useState([]);
   const [newButtonListName, setNewButtonListName] = useState("");
   const [newButtonListIsValid, setNewButtonListIsValid] = useState(true);
-
+  const {createLesson} = useCreateLesson();
   //selecting new button for new button list on modal
   const onNewButtonSelect = (e) => {
     const { checked, value } = e.target;
@@ -110,6 +110,21 @@ function SessionCreate() {
     );
   };
 
+  //creating session
+  const createSession = () => {
+    /* only true values of selectedButtonList */
+    const selectedButtons = Object.keys(selectedButtonList).filter(
+      (key) => selectedButtonList[key]
+    );
+    console.log(selectedButtons);
+    const lesson = {
+      name: sessionName,
+      description: sessionDescription,
+      buttonList: selectedButtons
+    };
+    createLesson(lesson);
+  };
+
   return (
     <div className="flex flex-col h-full items-center justify-center ">
       <div className="flex  items-center justify-center gap-36 w-full px-52">
@@ -119,12 +134,14 @@ function SessionCreate() {
             type="text"
             placeholder="Session Name"
             className="border-2 border-gray-300 rounded-md p-2 w-full mb-4"
+            onChange={(e) => setSessionName(e.target.value)}
           />
           <TextArea
           disabled={isPreview}
             size="3"
             placeholder="Session Description"
             className="min-h-44"
+            onChange={(e) => setSessionDescription(e.target.value)}
           />
         </div>
 
@@ -141,7 +158,9 @@ function SessionCreate() {
                 <Select.Content position="popper">
                   <Select.Item value="default">Default button list</Select.Item>
                   {buttonList.map((buttonList) => (
-                    <Select.Item value={buttonList.name}>
+                    <Select.Item
+                    key={buttonList.name}
+                    value={buttonList.name}>
                       {buttonList.name}
                     </Select.Item>
                   ))}
@@ -251,16 +270,15 @@ function SessionCreate() {
           >
             Edit
           </Button>
-          <Link to="/created-session-preview">
           <Button
             className="mt-6 cursor-pointer "
             color="teal"
             variant="soft"
             size={"4"}
+            onClick={createSession}
           >
             Create Session
           </Button>
-          </Link>
         </div>
       )}
     </div>

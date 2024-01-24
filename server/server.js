@@ -2,19 +2,21 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 const sqlite3 = require('sqlite3').verbose();
+const cors = require('cors');
 
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-
+app.use(cors());
 
 const db = new sqlite3.Database('database.db');
-
 // create lessons table
 db.run(`
 CREATE TABLE IF NOT EXISTS lessons (
     id INTEGER PRIMARY KEY,
     userId INTEGER,
+    name TEXT,
+    description TEXT,
     code TEXT,
     pin TEXT,
     started BOOLEAN,
@@ -44,27 +46,48 @@ db.run(`CREATE TABLE IF NOT EXISTS clicks (
 app.use(express.json());
 
 app.post('/create-lesson', (req, res) => {
-    const { userId, buttons } = req.body;
-    const newLesson = {
+  const { userId, buttonList, name, description } = req.body;
+  
+  // Yeni buton listesi için gerekli değişiklikler
+  const buttons = {
+      ahaButton: false,
+      lostButton: false,
+      referanceButton: false,
+      commentButton: false,
+      questionButton: false,
+  };
+
+  // Gelen buton listesinde bulunan butonları işaretle
+  buttonList.forEach(button => {
+      if (buttons.hasOwnProperty(button)) {
+          buttons[button] = true;
+      }
+  });
+
+  const newLesson = {
       userId,
       code: generateCode(),
       pin: generatePin(),
       started: false,
       isFinished: false,
       startedAt: null,
+      name,
+      description,
       ...buttons,
-    };
-  
-    const buttonColumns = Object.keys(buttons).map(button => `${button}Button`).join(', ');
-    const buttonValues = Object.keys(buttons).map(button => buttons[button]);
-  
-    // add new lesson to database
-    db.run(`INSERT INTO lessons (userId, code, pin, started, ${buttonColumns}) VALUES (?, ?, ?, ?, ${Array(buttons.length).fill('?').join(', ')})`,
-      [newLesson.userId, newLesson.code, newLesson.pin, newLesson.started, ...buttonValues]);
-  
-    io.emit('lesson-created', newLesson);
-    res.json({ code: newLesson.code, pin: newLesson.pin, userId: newLesson.userId });
-  });
+  };
+
+  // Buton sütunları için gerekli değişiklikler
+  const buttonColumns = Object.keys(buttons).join(', ');
+  const buttonValues = Object.values(buttons);
+
+  // Yeni lesson'ı veritabanına ekle
+  db.run(`INSERT INTO lessons (userId, code, pin, started, isFinished, startedAt, name, description, ${buttonColumns}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ${buttonValues.map(() => '?').join(', ')})`,
+      [newLesson.userId, newLesson.code, newLesson.pin, newLesson.started, newLesson.isFinished, newLesson.startedAt, newLesson.name, newLesson.description, ...buttonValues]);
+
+  io.emit('lesson-created', newLesson);
+  res.json({ code: newLesson.code, pin: newLesson.pin, userId: newLesson.userId, name: newLesson.name, description: newLesson.description });
+});
+
 
   app.get('/get-lessons/:userId', (req, res) => {
     const userId = req.params.userId;
