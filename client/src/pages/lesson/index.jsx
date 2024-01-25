@@ -71,18 +71,21 @@ function Lesson() {
     getClicks(lessonCode);
 
     const handleBeforeUnload = () => {
-      if (localStorage.getItem("lessonCode") !== lessonInfo.code) {
+      if (localStorage.getItem("lessonCode") !== lessonCode) {
         localStorage.removeItem("lessonCode");
       }
       if (localStorage.getItem("lessonCode") !== null) return;
       localStorage.setItem("lessonCode", lessonCode);
 
       disconnectLesson(lessonCode);
+      
     };
 
     window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("unload", handleBeforeUnload);
     return () => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("unload", handleBeforeUnload);
     };
   }, []);
 
