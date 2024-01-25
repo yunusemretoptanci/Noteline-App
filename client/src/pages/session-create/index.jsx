@@ -124,8 +124,8 @@ function SessionCreate() {
   };
 
   return (
-    <div className="flex flex-col h-full items-center justify-center ">
-      <div className="flex  items-center justify-center gap-36 w-full px-52">
+    <div className="flex pb-12 flex-col h-auto md:h-full items-center justify-center ">
+      <div className=" mt-24 flex flex-col md:flex-row items-center justify-center gap-12 md:gap-36 w-full md:px-52 px-4">
         <div className=" w-full">
           <input
           disabled={isPreview}
@@ -146,38 +146,13 @@ function SessionCreate() {
         <div className="flex flex-col items-center justify-center w-full">
           {!isPreview && (
             <>
-              <Select.Root
-                defaultValue="default"
-                onValueChange={(value) =>
-                  onButtonListSelectChange({ target: { name, value } })
-                }
-              >
-                <Select.Trigger className="!max-w-72" />
-                <Select.Content position="popper">
-                  <Select.Item value="default">Default button list</Select.Item>
-                  {buttonList.map((buttonList) => (
-                    <Select.Item
-                    key={buttonList.name}
-                    value={buttonList.name}>
-                      {buttonList.name}
-                    </Select.Item>
-                  ))}
-                </Select.Content>
-              </Select.Root>
+              
 
               <Dialog.Root
                 open={addNewButtonListDialogOpen}
                 onOpenChange={setAddNewButtonListDialogOpen}
               >
-                <Dialog.Trigger>
-                  <Button
-                    className="mt-3 cursor-pointer "
-                    color="teal"
-                    variant="soft"
-                  >
-                    Add New Button List
-                  </Button>
-                </Dialog.Trigger>
+               
 
                 <Dialog.Portal>
                   <Dialog.Overlay className="fixed inset-0 bg-black/50" />
@@ -238,11 +213,43 @@ function SessionCreate() {
                   </Dialog.Content>
                 </Dialog.Portal>
               </Dialog.Root>
+
+              <div>
+              <Select.Root
+                defaultValue="default"
+                onValueChange={(value) =>
+                  onButtonListSelectChange({ target: { name, value } })
+                }
+              >
+                <Select.Trigger className="!max-w-72" />
+                <Select.Content position="popper">
+                  <Select.Item value="default">Default button list</Select.Item>
+                  {buttonList.map((buttonList) => (
+                    <Select.Item
+                    key={buttonList.name}
+                    value={buttonList.name}>
+                      {buttonList.name}
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Root>
+
+
+                  <Button
+                    className="ml-3 cursor-pointer "
+                    color="teal"
+                    variant="soft"
+                    onClick={() => setAddNewButtonListDialogOpen(true)}
+                  >
+                    Add New Button List
+                  </Button>
+
+                </div>
             </>
           )}
 
           <div className="flex w-full flex-col items-center justify-center mt-8">
-            <ReactionButtons buttonList={selectedButtonList} />
+            <ReactionButtons buttonList={selectedButtonList} isOnlyPreview={true} />
           </div>
         </div>
       </div>

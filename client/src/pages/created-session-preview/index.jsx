@@ -13,7 +13,7 @@ function CreatedSessionPreview() {
   
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-full ">
+      <div className="flex flex-col px-6 md:px-0 items-center justify-center h-full ">
         <div className="border-2 border-gray-200 rounded-lg p-8">
           <p className="text-2xl font-medium">
             Session Name:{" "}
@@ -38,7 +38,7 @@ function CreatedSessionPreview() {
           </div>
         </div>
 
-        <div className="flex gap-32">
+        <div className="flex md:gap-32 gap-3">
           <Button
             className="mt-3 cursor-pointer "
             color="orange"

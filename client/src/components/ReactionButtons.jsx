@@ -3,11 +3,11 @@ import { Button, Slider } from "@radix-ui/themes";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useButtonClick from "../hooks/useButtonClick";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
-  const {handleClick} = useButtonClick()
+  const { handleClick } = useButtonClick();
   const notify = () => toast.success("Reaction Saved!");
   const [buttonName, setButtonName] = useState("");
   const [clickedButtonTime, setClickedButtonTime] = useState("");
@@ -39,8 +39,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     }
   };
 
-  const timeDifference =()=>{
-
+  const timeDifference = () => {
     const now = new Date();
     now.setHours(now.getHours() - 3);
     const targetDate = new Date(lesson.startedAt);
@@ -48,27 +47,27 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     const minutesDifference = timeDifference / (1000 * 60);
     setTime(minutesDifference.toFixed(2));
     setMaxTime(minutesDifference.toFixed(2));
-  }
+  };
 
   const onAhaButtonClick = () => {
     setButtonName("Aha");
     setClickButtonModalOpen(true);
     setIsAdditionalTextExist(false);
-    timeDifference()
+    timeDifference();
   };
 
   const onLostButtonClick = () => {
     setButtonName("Lost");
     setClickButtonModalOpen(true);
     setIsAdditionalTextExist(false);
-    timeDifference()
+    timeDifference();
   };
 
   const onReferanceButtonClick = () => {
     setButtonName("Referance");
     setClickButtonModalOpen(true);
     setIsAdditionalTextExist(true);
-    timeDifference()
+    timeDifference();
   };
 
   const onCommentButtonClick = () => {
@@ -76,14 +75,14 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     setClickButtonModalOpen(true);
     setIsAdditionalTextExist(true);
 
-    timeDifference()
+    timeDifference();
   };
 
   const onQuestionButtonClick = () => {
     setButtonName("Question");
     setClickButtonModalOpen(true);
     setIsAdditionalTextExist(true);
-    timeDifference()
+    timeDifference();
   };
 
   const saveClick = () => {
@@ -91,12 +90,19 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     /* updated time plus time munits */
     updatedTime.setMinutes(updatedTime.getMinutes() + Number(time));
     updatedTime.setHours(updatedTime.getHours() + 3);
-    const formattedTime = `${updatedTime.getFullYear()}-${String(updatedTime.getMonth() + 1).padStart(2, '0')}-${String(updatedTime.getDate()).padStart(2, '0')} ${String(updatedTime.getHours()).padStart(2, '0')}:${String(updatedTime.getMinutes()).padStart(2, '0')}:${String(updatedTime.getSeconds()).padStart(2, '0')}`;
-    handleClick(lesson.code,buttonName, formattedTime, additionalText);
+    const formattedTime = `${updatedTime.getFullYear()}-${String(
+      updatedTime.getMonth() + 1
+    ).padStart(2, "0")}-${String(updatedTime.getDate()).padStart(
+      2,
+      "0"
+    )} ${String(updatedTime.getHours()).padStart(2, "0")}:${String(
+      updatedTime.getMinutes()
+    ).padStart(2, "0")}:${String(updatedTime.getSeconds()).padStart(2, "0")}`;
+    handleClick(lesson.code, buttonName, formattedTime, additionalText);
     setAdditionalText("");
     setClickButtonModalOpen(false);
-    notify()
-  }
+    notify();
+  };
   return (
     <>
       {buttonList.ahaButton && (
@@ -104,7 +110,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           className="mt-3 cursor-pointer w-full"
           color="orange"
           variant="soft"
-          onClick={onAhaButtonClick}
+          onClick={!isOnlyPreview && onAhaButtonClick}
         >
           Aha
         </Button>
@@ -114,7 +120,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           className="mt-3 cursor-pointer w-full"
           color="orange"
           variant="soft"
-          onClick={onLostButtonClick}
+          onClick={!isOnlyPreview && onLostButtonClick}
         >
           Lost
         </Button>
@@ -124,7 +130,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           className="mt-3 cursor-pointer w-full"
           color="orange"
           variant="soft"
-          onClick={onReferanceButtonClick}
+          onClick={!isOnlyPreview && onReferanceButtonClick}
         >
           Referance
         </Button>
@@ -134,7 +140,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           className="mt-3 cursor-pointer w-full"
           color="orange"
           variant="soft"
-          onClick={onCommentButtonClick}
+          onClick={!isOnlyPreview && onCommentButtonClick}
         >
           Comment
         </Button>
@@ -144,7 +150,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           className="mt-3 cursor-pointer w-full"
           color="orange"
           variant="soft"
-          onClick={onQuestionButtonClick}
+          onClick={!isOnlyPreview && onQuestionButtonClick}
         >
           Question
         </Button>
@@ -166,13 +172,13 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
 
             <div className="mt-6">
               {isAdditionalTextExist && (
-              <input
-                type="text"
-                className="w-full border border-gray-300 rounded-md px-4 mb-4 py-2 text-sm"
-                placeholder="Additional Text"
-                onChange={(e) => setAdditionalText(e.target.value)}
-                value={additionalText}
-              />
+                <input
+                  type="text"
+                  className="w-full border border-gray-300 rounded-md px-4 mb-4 py-2 text-sm"
+                  placeholder="Additional Text"
+                  onChange={(e) => setAdditionalText(e.target.value)}
+                  value={additionalText}
+                />
               )}
               <div className="h-24 flex flex-col">
                 <p className="mb-4 text-base font-normal text-gray-500 dark:text-gray-400">
@@ -217,7 +223,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
               </Dialog.Close>
               <button
                 className="rounded bg-green-500 px-4 py-2 text-sm font-medium text-white hover:bg-green-600 w-full"
-                 onClick={saveClick}
+                onClick={saveClick}
               >
                 Save
               </button>

@@ -34,10 +34,10 @@ function LessonSummary() {
   console.log(buttonClickCounts);
 
   return (
-    <div className="h-full flex flex-col items-center justify-center">
-        <p className="text-2xl font-medium mb-24">Participant Count: {lessonInfo?.onlineParticipants+lessonInfo?.disconnectedParticipants}</p>
+    <div className="h-full flex flex-col items-center justify-center pt-6">
+        <p className="text-2xl font-medium md:mb-24 mb-3">Participant Count: {lessonInfo?.onlineParticipants+lessonInfo?.disconnectedParticipants}</p>
         <div className="flex items-center justify-center w-full">
-      <div className="flex  items-center justify-center gap-36 w-full px-52">
+      <div className="flex md:flex-row flex-col items-center justify-center md:gap:36 gap-3 w-full md:px-52 px-3">
         <div className=" w-full">
           <Card asChild className="w-full mb-4">
             <Text as="div" size="2" weight="bold">

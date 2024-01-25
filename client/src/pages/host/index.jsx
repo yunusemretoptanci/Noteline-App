@@ -29,7 +29,7 @@ console.log(selectedLesson);
   }
   return (
     <div className="h-full flex flex-col items-center justify-center">
-      <div className="flex h-fit gap-32 items-center justify-center">
+      <div className="flex flex-col md:flex-row h-fit md:gap-32 gap-14 items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-stone-700 mb-4">
             Host one of your session

@@ -95,9 +95,9 @@ function Lesson() {
   mutateData(clicks);
 
   return (
-    <div className="flex flex-col h-full items-center justify-center ">
+    <div className="flex flex-col md:pt-0 pt-20 pb-4 md:h-full h-auto items-center justify-center ">
       {userIsHost && (
-        <div className="flex items-center justify-center w-full px-52">
+        <div className="flex items-center justify-center w-full md:px-52 px-4">
           <div className="flex">
             <PersonIcon className="w-6 h-6 mr-2 text-green-300" />
             <p className="text-lg font-semibold text-gray-900 dark:text-black">
@@ -112,7 +112,7 @@ function Lesson() {
           </div>
         </div>
       )}
-      <div className="flex  items-center justify-center gap-36 w-full px-52">
+      <div className="flex md:flex-row flex-col items-center justify-center md:gap-36 gap-3 w-full md:px-52 px-3">
         <div className=" w-full">
           <Card asChild className="w-full mb-4">
             <Text as="div" size="2" weight="bold">

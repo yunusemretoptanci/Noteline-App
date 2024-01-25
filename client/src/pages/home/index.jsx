@@ -3,18 +3,9 @@ import { Button, Flex, Card, Text } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
 function Home() {
   return (
-    <Flex
-      gap="9"
-      justify={"center"}
-      align="center"
-      width={"100%"}
-      height={"100%"}
-      direction={{
-        initial: "column",
-        md: "row",
-      }}
-    >
-      <Card asChild size={"5"}>
+    <div className="gap-9 justify-center items-center w-full h-[100%] flex flex-col md:flex-row">
+   
+      <Card asChild size={"5"}  >
         <Link to="/join">
           <Text as="div" size="4" weight="bold" color="green">
             JOIN
@@ -29,7 +20,7 @@ function Home() {
           </Text>
         </Link>
       </Card>
-    </Flex>
+    </div>
   );
 }
 
