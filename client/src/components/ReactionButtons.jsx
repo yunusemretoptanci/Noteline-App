@@ -5,12 +5,13 @@ import { Cross1Icon } from "@radix-ui/react-icons";
 import useButtonClick from "../hooks/useButtonClick";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
+  const { t } = useTranslation();
   const { handleClick } = useButtonClick();
   const notify = () => toast.success("Reaction Saved!");
   const [buttonName, setButtonName] = useState("");
-  const [clickedButtonTime, setClickedButtonTime] = useState("");
   const [additionalText, setAdditionalText] = useState("");
   const [isAdditionalTextExist, setIsAdditionalTextExist] = useState(false);
   const [clickButtonModalOpen, setClickButtonModalOpen] = useState(false);
@@ -18,7 +19,8 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
   const [maxTime, setMaxTime] = useState(60);
   const onTimeChange = (e) => {
     const value = e.target.value;
-    /* noktadan sonrası 60 ta büyükse sonraki dakikaya yuvarla */
+
+    /* if value is bigger than 0.6 round up */
     if (value % 1 > 0.6) {
       setTime(Math.ceil(value));
     } else {
@@ -122,7 +124,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           variant="soft"
           onClick={!isOnlyPreview && onAhaButtonClick}
         >
-          Aha
+        {t("buttonNames.aha")}
         </Button>
       )}
       {buttonList.lostButton && (
@@ -132,7 +134,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           variant="soft"
           onClick={!isOnlyPreview && onLostButtonClick}
         >
-          Lost
+          {t("buttonNames.lost")}
         </Button>
       )}
       {buttonList.referanceButton && (
@@ -142,7 +144,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           variant="soft"
           onClick={!isOnlyPreview && onReferanceButtonClick}
         >
-          Referance
+          {t("buttonNames.reference")}
         </Button>
       )}
       {buttonList.commentButton && (
@@ -152,7 +154,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           variant="soft"
           onClick={!isOnlyPreview && onCommentButtonClick}
         >
-          Comment
+          {t("buttonNames.comment")}
         </Button>
       )}
       {buttonList.questionButton && (
@@ -162,7 +164,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           variant="soft"
           onClick={!isOnlyPreview && onQuestionButtonClick}
         >
-          Question
+         {t("buttonNames.question")}
         </Button>
       )}
 
