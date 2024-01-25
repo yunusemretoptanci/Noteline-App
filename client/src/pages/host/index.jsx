@@ -2,11 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Button, Select } from "@radix-ui/themes";
 import { Link } from "react-router-dom";
 import useLesson from "../../hooks/useLesson";
-
+import useUserLessons from "../../hooks/useUserLessons";
 import ErrorModal from "../../components/ErrorModal";
 function Host() {
   const { startLesson, error } = useLesson();
+  const { userLessons } = useUserLessons();
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [selectedLesson, setSelectedLesson] = useState({code: "", pin: ""});
+  console.log(userLessons);
  useEffect(() => {
     if(error){
       setIsErrorModalOpen(true);
@@ -20,7 +23,10 @@ function Host() {
     startLesson(code, pin);
     
   };
-
+console.log(selectedLesson);
+  const hostWithSelectedLesson = () => {
+    startLesson(selectedLesson.code, selectedLesson.pin)
+  }
   return (
     <div className="h-full flex flex-col items-center justify-center">
       <div className="flex h-fit gap-32 items-center justify-center">
@@ -29,13 +35,26 @@ function Host() {
             Host one of your session
           </p>
 
-          <Select.Root defaultValue="apple">
-            <Select.Trigger className="!max-w-72" />
+          <Select.Root defaultValue="default"
+          onValueChange={(value) => setSelectedLesson(value)}
+          >
+            <Select.Trigger className="!max-w-72 w-full" />
             <Select.Content position="popper">
-              <Select.Item value="apple">
-                ApplAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleAppleeAppleAppleApple
-              </Select.Item>
-              <Select.Item value="orange">Orange</Select.Item>
+              <Select.Item disabled value="default">Select a session</Select.Item>
+              {userLessons.length > 0 ? (
+                userLessons.map((lesson) => (
+                  <Select.Item
+                    key={lesson.id}
+                    value={lesson}
+                    className="flex items-center justify-between"
+                  >
+                   {lesson.name}
+                  </Select.Item>
+                ))
+              ) : (
+                <Select.Item disabled value="apple">No sessions</Select.Item>
+              )  
+              }
             </Select.Content>
           </Select.Root>
 
@@ -43,6 +62,8 @@ function Host() {
             className="mt-3 cursor-pointer w-full"
             color="orange"
             variant="soft"
+            onClick={hostWithSelectedLesson}
+            disabled={selectedLesson.code === ""}
           >
             Host
           </Button>

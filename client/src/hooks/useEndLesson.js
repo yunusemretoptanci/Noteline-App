@@ -6,14 +6,16 @@ function useEndLesson() {
 
     const [lessonInfo, setLessonInfo] = useState(null);
     const [error, setError] = useState(null);
-    const auth = localStorage.getItem("myCurrentLesson");
+    let auth = localStorage.getItem("myCurrentLesson");
 
     const endLesson = async () => {
+        auth = JSON.parse(auth);
         let code = auth.code;
         let pin = auth.pin;
+        console.log(code);
         try {
           setError(null);
-          const response = await fetch("http://localhost:3001/finish-lesson", {
+          const response = await fetch(`http://localhost:3001/finish-lesson`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
