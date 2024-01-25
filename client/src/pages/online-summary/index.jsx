@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useLesson from "../../hooks/useLesson";
 import useButtonClick from "../../hooks/useButtonClick";
-import { Text, Card, ScrollArea, Table, Button } from "@radix-ui/themes";
+import { Text, Card, ScrollArea, Table } from "@radix-ui/themes";
 import { useTranslation } from "react-i18next";
-function LessonSummary() {
+function OnlineSummary() {
   let { lessonCode } = useParams();
   const { t } = useTranslation();
   const { getLessonInfo, lessonInfo } = useLesson();
@@ -85,15 +85,8 @@ function LessonSummary() {
           </div>
         </div>
       </div>
-      <div className="mt-24">
-      <Link  to={`/sessions/${lessonCode}/summary`}>
-      <Button className=" cursor-pointer " color="gray" variant="soft" size={"4"}>
-        {t("lessonSummary.viewDetailsOnline")}
-      </Button>
-      </Link>
-      </div>
     </div>
   );
 }
 
-export default LessonSummary;
+export default OnlineSummary;

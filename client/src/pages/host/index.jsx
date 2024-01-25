@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import useLesson from "../../hooks/useLesson";
 import useUserLessons from "../../hooks/useUserLessons";
 import ErrorModal from "../../components/ErrorModal";
+import { useTranslation } from 'react-i18next';
 function Host() {
+  const { t } = useTranslation();
   const { startLesson, error } = useLesson();
   const { userLessons } = useUserLessons();
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState({code: "", pin: ""});
-  console.log(userLessons);
+ 
  useEffect(() => {
     if(error){
       setIsErrorModalOpen(true);
@@ -23,7 +25,7 @@ function Host() {
     startLesson(code, pin);
     
   };
-console.log(selectedLesson);
+  
   const hostWithSelectedLesson = () => {
     startLesson(selectedLesson.code, selectedLesson.pin)
   }
@@ -32,7 +34,7 @@ console.log(selectedLesson);
       <div className="flex flex-col md:flex-row h-fit md:gap-32 gap-14 items-center justify-center">
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-stone-700 mb-4">
-            Host one of your session
+          {t('host.hostYourSession')}
           </p>
 
           <Select.Root defaultValue="default"
@@ -40,7 +42,7 @@ console.log(selectedLesson);
           >
             <Select.Trigger className="!max-w-72 w-full" />
             <Select.Content position="popper">
-              <Select.Item disabled value="default">Select a session</Select.Item>
+              <Select.Item disabled value="default">{t('host.selectSession')}</Select.Item>
               {userLessons.length > 0 ? (
                 userLessons.map((lesson) => (
                   <Select.Item
@@ -52,7 +54,7 @@ console.log(selectedLesson);
                   </Select.Item>
                 ))
               ) : (
-                <Select.Item disabled value="apple">No sessions</Select.Item>
+                <Select.Item disabled value="apple">{t('host.noSession')}</Select.Item>
               )  
               }
             </Select.Content>
@@ -65,23 +67,23 @@ console.log(selectedLesson);
             onClick={hostWithSelectedLesson}
             disabled={selectedLesson.code === ""}
           >
-            Host
+           {t('host.host')}
           </Button>
         </div>
 
         <div className="flex flex-col items-center justify-center">
           <p className="text-2xl font-bold text-stone-700 mb-2">
-            Host another session
+          {t('host.hostAnotherSession')}
           </p>
           <form className="flex flex-col" onSubmit={startLessonWithCode}>
             <input
               type="text"
-              placeholder="Session Code"
+              placeholder={t('host.sessionCode')}
               className="border-2 border-gray-300 rounded-md p-2"
             />
             <input
               type="text"
-              placeholder="Session Pin"
+              placeholder={t('host.sessionPin')}
               className="border-2 border-gray-300 rounded-md p-2 mt-2"
             />
             <Button
@@ -90,7 +92,7 @@ console.log(selectedLesson);
               variant="soft"
               type="submit"
             >
-              Host
+               {t('host.host')}
             </Button>
           </form>
         </div>
@@ -102,10 +104,10 @@ console.log(selectedLesson);
           variant="soft"
           size={"4"}
         >
-          New Session
+          {t('host.newSession')}
         </Button>
       </Link>
-      <ErrorModal isOpen={isErrorModalOpen} setIsOpen={setIsErrorModalOpen} errText={"Invalid code/pin or lesson already started or finished"}  />
+      <ErrorModal isOpen={isErrorModalOpen} setIsOpen={setIsErrorModalOpen} errText={t('host.errText')}  />
     </div>
   );
 }

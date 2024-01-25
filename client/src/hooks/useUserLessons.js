@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useUserId from './useUserId';
+
+// Custom hook to get all lessons that the user has not started yet
 function useUserLessons() {
     const [userLessons, setUserLessons] = useState([]); 
     const userId = useUserId();

@@ -21,7 +21,7 @@ const useLesson = () => {
       }
       const data = await response.json();
       localStorage.setItem("myCurrentLesson", JSON.stringify({ code, pin }));
-      // Başlatma başarılıysa gerekli işlemleri burada yapabilirsiniz
+      
         navigate(`/lesson/${data.lessonCode}`);
     } catch (error) {
       setError(error.message || "Bir hata oluştu");

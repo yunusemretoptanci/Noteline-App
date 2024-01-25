@@ -61,7 +61,6 @@ app.use(express.json());
 app.post("/create-lesson", (req, res) => {
   const { userId, buttonList, name, description } = req.body;
 
-  // Yeni buton listesi için gerekli değişiklikler
   const buttons = {
     ahaButton: false,
     lostButton: false,
@@ -70,7 +69,6 @@ app.post("/create-lesson", (req, res) => {
     questionButton: false,
   };
 
-  // Gelen buton listesinde bulunan butonları işaretle
   buttonList.forEach((button) => {
     if (buttons.hasOwnProperty(button)) {
       buttons[button] = true;
@@ -89,11 +87,9 @@ app.post("/create-lesson", (req, res) => {
     ...buttons,
   };
 
-  // Buton sütunları için gerekli değişiklikler
   const buttonColumns = Object.keys(buttons).join(", ");
   const buttonValues = Object.values(buttons);
 
-  // Yeni lesson'ı veritabanına ekle
   db.run(
     `INSERT INTO lessons (userId, code, pin, started, isFinished, startedAt, name, description, ${buttonColumns}) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ${buttonValues
       .map(() => "?")

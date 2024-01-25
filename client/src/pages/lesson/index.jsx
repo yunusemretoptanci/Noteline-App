@@ -10,8 +10,10 @@ import useButtonClick from "../../hooks/useButtonClick";
 import { PersonIcon } from "@radix-ui/react-icons";
 import useEndLesson from "../../hooks/useEndLesson";
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 function Lesson() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const userId = useUserId();
   let { lessonCode } = useParams();
@@ -129,7 +131,7 @@ function Lesson() {
           </Card>
           <Card className="w-full min-h-44">
             <Text as="div" size="2" weight="bold">
-              Session Description:
+            {t("lesson.sessionDescription")}
             </Text>
             <ScrollArea
               type="always"
@@ -188,7 +190,7 @@ function Lesson() {
           size="4"
           onClick={() => endLesson()}
         >
-          End The Session
+         {t('lesson.endSession')}
         </Button>
       )}
     </div>

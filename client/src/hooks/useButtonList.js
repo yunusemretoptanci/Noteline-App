@@ -4,20 +4,20 @@ function useButtonList() {
   const [buttonList, setButtonList] = useState([]);
 
   useEffect(() => {
-    // localStorage'dan veriyi çek
+    // get the buttonList from localStorage
     const storedButtonList = JSON.parse(localStorage.getItem('buttonList')) || [];
     setButtonList(storedButtonList);
   }, []);
 
   const addNewButtonList = (newButton) => {
-    // Mevcut buttonList'in kopyasını al
+    // take a copy of the old buttonList
     const oldButtonList = [...buttonList];
     
-    // Yeni butonu ekleyerek güncellenmiş listeyi localStorage'a kaydet
+    // add the new button to the old buttonList
     const updatedButtonList = [...oldButtonList, newButton];
     localStorage.setItem('buttonList', JSON.stringify(updatedButtonList));
 
-    // State'i güncelle
+    // set the new buttonList
     setButtonList(updatedButtonList);
   };
 

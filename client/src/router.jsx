@@ -12,7 +12,7 @@ import CreatedSessionPreview from "./pages/created-session-preview";
 
 import Lesson from "./pages/lesson";
 import LessonSummary from "./pages/lesson-summary";
-
+import OnlineSummary from "./pages/online-summary";
 const router = createBrowserRouter([
   {
   element: <Layout />,
@@ -43,6 +43,10 @@ const router = createBrowserRouter([
     },{
       path: "/lesson-summary/:lessonCode",
       element: <LessonSummary />,
+    },
+    {
+      path: "/sessions/:lessonCode/summary",
+      element: <OnlineSummary />,
     },
     {
       path: "*",

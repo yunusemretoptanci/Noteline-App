@@ -26,7 +26,7 @@ function useEndLesson() {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           const data = await response.json();
-          // Başlatma başarılıysa gerekli işlemleri burada yapabilirsiniz
+       
             navigate(`/lesson-summary/${data.lessonCode}`);
         } catch (error) {
           setError(error.message || "Bir hata oluştu");

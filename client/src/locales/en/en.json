@@ -1,0 +1,65 @@
+{
+    "home":{
+        "join":"JOIN",
+        "host":"HOST"
+    },
+    "host":{
+        "host":"Host",
+        "hostYourSession":"Host one of your session",
+        "selectSession":"Select a session",
+        "noSession":"You don't have any session yet",
+        "hostAnotherSession":"Host another session",
+        "sessionCode":"Session Code",
+        "sessionPin":"Session Pin",
+        "newSession":"New session",
+        "errText":"Invalid code/pin or lesson already started or finished"
+    },
+    "join":{
+        "join":"Join",
+        "joinSession":"Join the session",
+        "sessionCode":"Session Code",
+        "errText":"Invalid code/pin or lesson already started or finished"
+    },
+    "sessionCreate":{
+        "sessionName":"Session Name",
+        "sessionDescription":"Session Description",
+        "defaultButtonList":"Default Button List",
+        "addNewButtonList":"Add New Button List",
+        "preview":"Preview",
+        "edit":"Edit",
+        "createSession":"Create Session",
+        "pleaseFill":"Please fill the name and select at least one button.",
+        "cancel":"Cancel",
+        "save":"Save",
+        "buttonListName":"Button List Name"
+    },
+
+    "sessionPreview":{
+        "sessionName":"Session Name:",
+        "sessionDescription":"Session Description:",
+        "sessionCreated":"Your session has been created.",
+        "joinWithCode":"Join With Code:",
+        "pin":"Pin:",
+        "hostNow":"Host Now",
+        "saveLater":"Save for later"
+    },
+    "lesson":{
+        "sessionDescription":"Session Description:",
+        "endSession":"End The Session"
+    },
+    "lessonSummary":{
+    "participantCount":"Participant Count:",
+    "sessionDescription":"Session Description:",
+    "type":"Type",
+    "total":"Total",
+    "viewDetailsOnline":"View Details Online"
+    },
+
+    "buttonNames":{
+        "aha":"Aha!",
+        "lost":"I'm Lost",
+        "reference":"Reference",
+        "comment":"Comment",
+        "question":"Question"
+    }
+}
