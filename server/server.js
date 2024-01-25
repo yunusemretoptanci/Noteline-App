@@ -135,6 +135,25 @@ app.get("/get-lessons/:userId", (req, res) => {
   });
 });
 
+//get unstarted and unfinished lessons
+app.get("/get-unstarted-lessons/:userId", (req, res) => {
+  const userId = req.params.userId;
+  // filter lessons by userId
+  db.all(
+    "SELECT * FROM lessons WHERE userId = ? AND started = false AND isFinished = false",
+    [userId],
+    (err, rows) => {
+      if (err) {
+        console.error(err);
+        res.status(500).json({ error: "Internal Server Error" });
+        return;
+      }
+
+      res.json(rows);
+    }
+  );
+});
+
 //start lesson
 app.post("/start-lesson", (req, res) => {
   const { code, pin } = req.body;
@@ -225,7 +244,7 @@ app.post("/finish-lesson", (req, res) => {
 
       io.emit("lesson-finished", { lessonId: row.id });
 
-      res.json({ success: true });
+      res.json({ success: true, lessonId: row.id, lessonCode: row.code});
     }
   );
 });
