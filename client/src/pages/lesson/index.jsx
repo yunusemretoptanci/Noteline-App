@@ -9,7 +9,10 @@ import useUserId from "../../hooks/useUserId";
 import useButtonClick from "../../hooks/useButtonClick";
 import { PersonIcon } from "@radix-ui/react-icons";
 import useEndLesson from "../../hooks/useEndLesson";
+import { useNavigate } from 'react-router-dom';
+
 function Lesson() {
+  const navigate = useNavigate();
   const userId = useUserId();
   let { lessonCode } = useParams();
   const { disconnectLesson } = useDisconnectLesson();
@@ -45,6 +48,11 @@ function Lesson() {
     socket.on("lesson-joined", () => {
       console.log("lesson-joined");
       getLessonInfo(lessonCode);
+    });
+
+    socket.on("lesson-finished", () => {
+      console.log("lesson-finished");
+      navigate(`/lesson-summary/${lessonCode}`);
     });
 
     socket.on("lesson-disconnected", () => {

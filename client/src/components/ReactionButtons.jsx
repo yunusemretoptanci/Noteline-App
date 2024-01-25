@@ -43,11 +43,21 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     const now = new Date();
     now.setHours(now.getHours() - 3);
     const targetDate = new Date(lesson.startedAt);
+
     const timeDifference = now - targetDate;
-    const minutesDifference = timeDifference / (1000 * 60);
-    setTime(minutesDifference.toFixed(2));
-    setMaxTime(minutesDifference.toFixed(2));
-  };
+    const minutesDifference = new Date(timeDifference).getMinutes();
+    const secondsDifference = new Date(timeDifference).getSeconds();
+    console.log(now);
+    console.log(targetDate);
+    console.log(`${minutesDifference}:${secondsDifference}`);
+    
+    // Display minutes in console
+
+    // Set state or perform other actions with the minutes
+    setTime(`${minutesDifference}.${secondsDifference}`);
+    setMaxTime(`${minutesDifference}.${secondsDifference}`);
+};
+
 
   const onAhaButtonClick = () => {
     setButtonName("Aha");
