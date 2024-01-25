@@ -3,10 +3,12 @@ import { Button, Slider } from "@radix-ui/themes";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import useButtonClick from "../hooks/useButtonClick";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
   const {handleClick} = useButtonClick()
-
+  const notify = () => toast.success("Reaction Saved!");
   const [buttonName, setButtonName] = useState("");
   const [clickedButtonTime, setClickedButtonTime] = useState("");
   const [additionalText, setAdditionalText] = useState("");
@@ -91,8 +93,9 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
     updatedTime.setHours(updatedTime.getHours() + 3);
     const formattedTime = `${updatedTime.getFullYear()}-${String(updatedTime.getMonth() + 1).padStart(2, '0')}-${String(updatedTime.getDate()).padStart(2, '0')} ${String(updatedTime.getHours()).padStart(2, '0')}:${String(updatedTime.getMinutes()).padStart(2, '0')}:${String(updatedTime.getSeconds()).padStart(2, '0')}`;
     handleClick(lesson.code,buttonName, formattedTime, additionalText);
+    setAdditionalText("");
     setClickButtonModalOpen(false);
-    
+    notify()
   }
   return (
     <>
@@ -222,6 +225,7 @@ function ReactionButtons({ buttonList, isOnlyPreview, lesson }) {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+      <ToastContainer />
     </>
   );
 }

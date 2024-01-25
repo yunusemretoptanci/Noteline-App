@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactionButtons from "../../components/ReactionButtons";
-import { TextArea, Text, Card,ScrollArea } from "@radix-ui/themes";
+import { TextArea, Text, Card,ScrollArea, Button } from "@radix-ui/themes";
 import { useParams } from "react-router-dom";
 import useLesson from "../../hooks/useLesson";
 import io from 'socket.io-client';
@@ -8,6 +8,7 @@ import useDisconnectLesson from "../../hooks/useDisconnectLesson";
 import useUserId from "../../hooks/useUserId";
 import useButtonClick from "../../hooks/useButtonClick";
 import { PersonIcon } from "@radix-ui/react-icons";
+import useEndLesson from "../../hooks/useEndLesson";
 function Lesson() {
   const userId = useUserId();
   let {lessonCode} = useParams();
@@ -15,6 +16,7 @@ function Lesson() {
   const {getLessonInfo,lessonInfo} = useLesson();
   const[userIsHost , setUserIsHost] = useState(false);
   const {getClicks, clicks} = useButtonClick()
+  const {endLesson} = useEndLesson();
 
   console.log(clicks);
   const checkUserIsHost = () => {
@@ -126,7 +128,7 @@ function Lesson() {
         <div className="flex flex-col items-center justify-center w-full">
           <div className="flex w-full flex-col items-center justify-center mt-8 ">
             {userIsHost ? (
-              <ScrollArea type="always" scrollbars="vertical" style={{ height: 500 }}>
+              <ScrollArea type="always" scrollbars="vertical" style={{ height: 400 }}>
               <div className="flex flex-col  justify-center w-full pl-24">
               <ol className="relative border-s border-gray-200 dark:border-gray-700 ">                  
 
@@ -159,8 +161,17 @@ function Lesson() {
             )}
 
           </div>
+         
         </div>
+      
       </div>
+      {userIsHost && (
+          <Button className="mt-6 cursor-pointer" color="red" variant="soft" size="4"
+          onClick={() => endLesson()}
+          >
+            End The Session
+          </Button>
+          )}
     </div>
   );
 }

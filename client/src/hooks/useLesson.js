@@ -20,6 +20,7 @@ const useLesson = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
+      localStorage.setItem("myCurrentLesson", JSON.stringify({ code, pin }));
       // Başlatma başarılıysa gerekli işlemleri burada yapabilirsiniz
         navigate(`/lesson/${data.lessonCode}`);
     } catch (error) {

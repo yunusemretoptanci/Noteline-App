@@ -11,6 +11,8 @@ import SessionCreate from "./pages/session-create";
 import CreatedSessionPreview from "./pages/created-session-preview";
 
 import Lesson from "./pages/lesson";
+import LessonSummary from "./pages/lesson-summary";
+
 const router = createBrowserRouter([
   {
   element: <Layout />,
@@ -38,6 +40,9 @@ const router = createBrowserRouter([
     {
       path: "/lesson/:lessonCode",
       element: <Lesson />,
+    },{
+      path: "/lesson-summary/:lessonCode",
+      element: <LessonSummary />,
     },
     {
       path: "*",
