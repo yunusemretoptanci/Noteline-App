@@ -36,7 +36,6 @@ function SessionCreate() {
   //selecting new button for new button list on modal
   const onNewButtonSelect = (e) => {
     const { checked, value } = e.target;
-    console.log(checked, value);
     if (checked) {
       setNewButtonListSelectedCheckboxValues((prevValues) => [
         ...prevValues,
@@ -116,7 +115,6 @@ function SessionCreate() {
     const selectedButtons = Object.keys(selectedButtonList).filter(
       (key) => selectedButtonList[key]
     );
-    console.log(selectedButtons);
     const lesson = {
       name: sessionName,
       description: sessionDescription,

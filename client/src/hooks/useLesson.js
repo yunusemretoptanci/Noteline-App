@@ -21,7 +21,6 @@ const useLesson = () => {
       }
       const data = await response.json();
       // Başlatma başarılıysa gerekli işlemleri burada yapabilirsiniz
-      console.log(data);
         navigate(`/lesson/${data.lessonCode}`);
     } catch (error) {
       setError(error.message || "Bir hata oluştu");
@@ -43,15 +42,13 @@ const useLesson = () => {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
-    setLessonInfo(data);
+      setLessonInfo(data);
 
     } catch (error) {
      console.log(error)
     } finally {
     }
   };
-
   return {
     startLesson,
     error,

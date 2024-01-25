@@ -18,7 +18,6 @@ function useJoinLesson() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
       navigate(`/lesson/${data.lessonCode}`);
     } catch (error) {
       setError(error.message || "Error");

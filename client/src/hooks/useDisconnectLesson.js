@@ -14,7 +14,6 @@ function useDisconnectLesson() {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log(data);
       } catch (error) {
         console.error(error);
       } finally {
